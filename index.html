@@ -633,13 +633,11 @@
           </div>
 
           <div class="action-row">
-            <button class="secondary-btn" onclick="copyResultText()">העתק טקסט</button>
-            <button class="share-btn" onclick="shareAsImage()">שתף כתמונה</button>
-            <button class="wa-btn" onclick="shareToWhatsApp()">שתף לוואטסאפ</button>
+            <button class="share-btn" onclick="shareResult()">שתף תוצאה</button>
             <button class="ghost-btn" onclick="resetForm()">בדוק שם נוסף</button>
           </div>
 
-          <div class="tiny-note">כפתור השיתוף לתמונה יוצר כרטיס מוכן לשליחה. במכשירים מסוימים תיפתח אפשרות שיתוף ישירה, ובאחרים תישמר תמונה מוכנה.</div>
+          <div class="tiny-note">כפתור השיתוף יוצר תמונה מוכנה ומצרף גם טקסט עם קישור לאתר. במכשירים שתומכים בזה תיפתח אפשרות שיתוף ישירה, ובאחרים תישמר תמונה מוכנה לשיתוף.</div>כפתור השיתוף לתמונה יוצר כרטיס מוכן לשליחה. במכשירים מסוימים תיפתח אפשרות שיתוף ישירה, ובאחרים תישמר תמונה מוכנה.</div>
         </div>
 
         <div class="footer-line">נבנה לחוויית מובייל מלאה • מתאים לשיתוף עם חברים ומשפחה</div>
@@ -827,21 +825,7 @@
       document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    async function copyResultText() {
-      if (!latestResult) {
-        showError('קודם צריך לחשב תוצאה.');
-        return;
-      }
-
-      try {
-        await navigator.clipboard.writeText(latestResult.fullText);
-        showStatus('הטקסט הועתק ללוח.');
-      } catch (e) {
-        showError('לא הצלחתי להעתיק את הטקסט.');
-      }
-    }
-
-    async function shareAsImage() {
+    async function shareResult() {
       if (!latestResult) {
         showError('קודם צריך לחשב תוצאה.');
         return;
@@ -863,15 +847,23 @@
           }
 
           const file = new File([blob], 'gematria-result.png', { type: 'image/png' });
+          const pageUrl = window.location.href;
+          const shareText = `בדקתי את השם שלי 🔮
+
+השם: ${latestResult.cleanedName}
+המספר הקטן: ${latestResult.smallNumber}
+
+בדקו גם את השם שלכם 👇
+${pageUrl}`;
           const canNativeShare = navigator.share && navigator.canShare && navigator.canShare({ files: [file] });
 
           if (canNativeShare) {
             await navigator.share({
               files: [file],
-              title: 'תוצאת הגימטריה שלי',
-              text: `בדקתי את השם שלי: ${latestResult.cleanedName}`
+              title: 'בדקתי את השם שלי',
+              text: shareText
             });
-            showStatus('התמונה שותפה בהצלחה.');
+            showStatus('התוצאה שותפה בהצלחה.');
             return;
           }
 
@@ -881,26 +873,20 @@
           a.download = 'gematria-result.png';
           a.click();
           URL.revokeObjectURL(url);
-          showStatus('נוצרה תמונה מוכנה לשיתוף.');
+
+          try {
+            await navigator.clipboard.writeText(shareText);
+            showStatus('התמונה ירדה והטקסט לשיתוף הועתק ללוח.');
+          } catch (e) {
+            showStatus('התמונה ירדה. אפשר לצרף אותה ידנית יחד עם הקישור לאתר.');
+          }
         }, 'image/png');
       } catch (e) {
-        showError('השיתוף כתמונה לא הצליח במכשיר הזה.');
+        showError('השיתוף לא הצליח במכשיר הזה.');
       }
     }
 
-    function shareToWhatsApp() {
-      if (!latestResult) {
-        showError('קודם צריך לחשב תוצאה.');
-        return;
-      }
-
-      const pageUrl = window.location.href;
-      const text = `בדקתי את הגימטריה של השם שלי 🔮\n\nהשם: ${latestResult.cleanedName}\nהמספר הקטן: ${latestResult.smallNumber}\n\nבדקו גם את השם שלכם 👇\n${pageUrl}`;
-      const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
-      window.open(waUrl, '_blank');
-    }
-
-    function resetForm() {
+    function resetForm() {) {
       document.getElementById('nameInput').value = '';
       document.getElementById('result').classList.remove('show');
       document.getElementById('error').style.display = 'none';
