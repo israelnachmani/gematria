@@ -2,40 +2,50 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>מחשבון גימטריה לשם</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>מה המספר הסודי של השם שלך?</title>
+  <meta name="description" content="הכנסו שם מלא בעברית וקבלו גימטריה, מספר קטן ופירוש ברור ומעוצב לשיתוף כתמונה." />
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     :root {
-      --bg1: #0f172a;
-      --bg2: #1e1b4b;
-      --bg3: #3b0764;
-      --card: rgba(255,255,255,0.1);
-      --border: rgba(255,255,255,0.16);
+      --bg1: #070b1f;
+      --bg2: #1d1446;
+      --bg3: #4a0d67;
+      --glass: rgba(255,255,255,0.09);
+      --glass-strong: rgba(255,255,255,0.13);
+      --border: rgba(255,255,255,0.14);
       --text: #f8fafc;
       --muted: #cbd5e1;
       --accent1: #a855f7;
       --accent2: #06b6d4;
       --accent3: #f59e0b;
-      --shadow: 0 25px 60px rgba(0,0,0,0.35);
+      --accent4: #fb7185;
+      --success: #22c55e;
+      --shadow: 0 25px 70px rgba(0,0,0,0.34);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(168,85,247,0.22), transparent 30%),
+        radial-gradient(circle at 80% 28%, rgba(6,182,212,0.16), transparent 26%),
+        radial-gradient(circle at 55% 85%, rgba(245,158,11,0.12), transparent 20%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 46%, var(--bg3));
+      overflow-x: hidden;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-      padding: 24px;
+      padding: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(168,85,247,0.25), transparent 28%),
-        radial-gradient(circle at 80% 30%, rgba(6,182,212,0.18), transparent 25%),
-        radial-gradient(circle at 60% 80%, rgba(245,158,11,0.12), transparent 18%),
-        linear-gradient(135deg, var(--bg1), var(--bg2) 45%, var(--bg3));
-      overflow-x: hidden;
     }
 
     .stars, .stars::before, .stars::after {
@@ -44,107 +54,134 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.75), transparent),
-        radial-gradient(1.5px 1.5px at 120px 80px, rgba(255,255,255,.65), transparent),
-        radial-gradient(1.8px 1.8px at 220px 140px, rgba(255,255,255,.5), transparent),
-        radial-gradient(2px 2px at 320px 40px, rgba(255,255,255,.7), transparent),
-        radial-gradient(1.5px 1.5px at 420px 160px, rgba(255,255,255,.55), transparent);
-      background-size: 500px 220px;
-      animation: drift 28s linear infinite;
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.76), transparent),
+        radial-gradient(1.5px 1.5px at 120px 80px, rgba(255,255,255,.62), transparent),
+        radial-gradient(2px 2px at 220px 150px, rgba(255,255,255,.42), transparent),
+        radial-gradient(2px 2px at 340px 40px, rgba(255,255,255,.72), transparent),
+        radial-gradient(1.5px 1.5px at 430px 170px, rgba(255,255,255,.52), transparent);
+      background-size: 520px 240px;
+      animation: drift 30s linear infinite;
       opacity: .45;
     }
 
-    .stars::before { animation-duration: 40s; opacity: .28; transform: scale(1.2); }
-    .stars::after { animation-duration: 55s; opacity: .18; transform: scale(1.45); }
+    .stars::before { animation-duration: 44s; opacity: .28; transform: scale(1.2); }
+    .stars::after { animation-duration: 58s; opacity: .18; transform: scale(1.42); }
 
     @keyframes drift {
       from { transform: translateY(0); }
-      to { transform: translateY(-220px); }
+      to { transform: translateY(-240px); }
     }
 
-    .wrap {
+    .page {
       width: 100%;
       max-width: 760px;
       position: relative;
       z-index: 1;
     }
 
-    .card {
-      width: 100%;
-      background: var(--card);
+    .shell {
+      position: relative;
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 30px;
-      box-shadow: var(--shadow);
-      position: relative;
       overflow: hidden;
     }
 
-    .card::before {
+    .shell::before {
       content: "";
       position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(168,85,247,0.22), transparent 70%);
-      top: -60px;
+      top: -80px;
       left: -40px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,85,247,0.23), transparent 70%);
       filter: blur(4px);
     }
 
-    .card::after {
+    .shell::after {
       content: "";
       position: absolute;
-      width: 180px;
-      height: 180px;
-      border-radius: 999px;
+      right: -40px;
+      bottom: -70px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
       background: radial-gradient(circle, rgba(6,182,212,0.18), transparent 70%);
-      bottom: -50px;
-      right: -30px;
       filter: blur(4px);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: 26px;
     }
 
     .top-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 14px;
+      padding: 9px 15px;
       border-radius: 999px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.12);
+      color: #f5d0fe;
       font-size: 13px;
-      color: #e9d5ff;
       margin-bottom: 18px;
     }
 
     h1 {
-      margin: 0 0 10px;
-      font-size: 38px;
-      line-height: 1.15;
+      margin: 0;
       text-align: center;
-      letter-spacing: -0.02em;
+      font-size: 40px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
     }
 
     .subtitle {
-      margin: 0 0 26px;
+      margin: 14px auto 0;
+      max-width: 620px;
       text-align: center;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.75;
       font-size: 16px;
     }
 
-    .input-wrap {
+    .hero-note {
+      margin-top: 18px;
+      text-align: center;
+      color: #fde68a;
+      font-size: 14px;
+    }
+
+    .form-box {
+      margin-top: 26px;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 10px;
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .input-row {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
     }
 
     input {
       flex: 1;
-      min-width: 220px;
+      min-width: 230px;
+      width: 100%;
       padding: 17px 18px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,0.14);
@@ -152,15 +189,15 @@
       color: white;
       font-size: 18px;
       outline: none;
-      transition: 0.25s;
+      transition: .22s ease;
       text-align: right;
     }
 
     input::placeholder { color: #cbd5e1; }
 
     input:focus {
-      border-color: rgba(168,85,247,0.8);
-      box-shadow: 0 0 0 4px rgba(168,85,247,0.15);
+      border-color: rgba(168,85,247,0.72);
+      box-shadow: 0 0 0 4px rgba(168,85,247,0.14);
       background: rgba(255,255,255,0.11);
     }
 
@@ -171,37 +208,94 @@
       font-size: 16px;
       cursor: pointer;
       color: white;
-      font-weight: bold;
-      transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
+      font-weight: 700;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+      min-height: 54px;
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.2);
-    }
-
+    button:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0,0,0,0.22); }
     button:active { transform: translateY(0); }
 
-    .primary-btn {
-      background: linear-gradient(135deg, var(--accent1), #7c3aed 45%, #2563eb);
+    .primary-btn { background: linear-gradient(135deg, var(--accent1), #7c3aed 46%, #2563eb); }
+    .secondary-btn { background: linear-gradient(135deg, #0ea5e9, #14b8a6); }
+    .share-btn { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+    .wa-btn { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .ghost-btn {
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.12);
     }
 
-    .secondary-btn {
-      background: linear-gradient(135deg, #0ea5e9, #14b8a6);
+    .status, .error {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      display: none;
+      line-height: 1.6;
     }
 
-    .share-btn {
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
+    .status {
+      background: rgba(20,83,45,0.28);
+      border: 1px solid rgba(74,222,128,0.25);
+      color: #bbf7d0;
+    }
+
+    .error {
+      background: rgba(127,29,29,0.28);
+      border: 1px solid rgba(248,113,113,0.25);
+      color: #fecaca;
+    }
+
+    .loader {
+      display: none;
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      text-align: center;
+      animation: fadeUp .35s ease;
+    }
+
+    .loader.show { display: block; }
+
+    .orb {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.08) 30%, transparent 31%),
+        radial-gradient(circle, rgba(168,85,247,0.65), rgba(37,99,235,0.22) 58%, transparent 72%);
+      box-shadow: 0 0 24px rgba(168,85,247,0.45), 0 0 60px rgba(6,182,212,0.16);
+      animation: pulseGlow 1.8s ease-in-out infinite;
+    }
+
+    .loader-text {
+      font-size: 17px;
+      color: #f8fafc;
+      min-height: 28px;
+    }
+
+    .loader-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 24px rgba(168,85,247,0.42), 0 0 60px rgba(6,182,212,0.12); }
+      50% { transform: scale(1.06); box-shadow: 0 0 32px rgba(168,85,247,0.62), 0 0 80px rgba(6,182,212,0.18); }
     }
 
     .result {
       display: none;
       margin-top: 20px;
-      border-radius: 24px;
       padding: 22px;
-      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 26px;
       background: rgba(255,255,255,0.06);
-      animation: fadeUp .5s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+      animation: fadeUp .45s ease;
     }
 
     .result.show { display: block; }
@@ -211,97 +305,105 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .result-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .result-title {
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .result-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fde68a;
+      font-size: 13px;
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0,1fr));
       gap: 14px;
       margin-bottom: 16px;
     }
 
     .box {
-      background: rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.12);
-      text-align: center;
       position: relative;
       overflow: hidden;
+      background: rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
     }
 
     .box::after {
       content: "";
       position: absolute;
       inset: auto auto -50px -30px;
-      width: 110px;
-      height: 110px;
-      border-radius: 999px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
       background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
     }
 
-    .label {
-      color: var(--muted);
-      font-size: 14px;
+    .label { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+
+    .value {
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 0 18px rgba(255,255,255,0.12);
+    }
+
+    .meaning-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .meaning-title {
+      font-size: 18px;
+      font-weight: 700;
       margin-bottom: 8px;
     }
 
-    .value {
-      font-size: 34px;
-      font-weight: bold;
-      color: white;
-      text-shadow: 0 0 16px rgba(255,255,255,0.14);
-    }
-
-    .meaning {
-      background: rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.12);
+    .meaning-text {
       line-height: 1.9;
       color: #f8fafc;
+      font-size: 16px;
     }
 
     .action-row {
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 12px;
       margin-top: 16px;
     }
 
-    .error, .success {
-      margin-top: 10px;
-      display: none;
-      font-size: 15px;
-      padding: 12px 14px;
-      border-radius: 14px;
-    }
-
-    .error {
-      color: #fecaca;
-      background: rgba(127, 29, 29, 0.28);
-      border: 1px solid rgba(248, 113, 113, 0.25);
-    }
-
-    .success {
-      color: #bbf7d0;
-      background: rgba(20, 83, 45, 0.28);
-      border: 1px solid rgba(74, 222, 128, 0.25);
-    }
-
-    .hint {
-      margin-top: 16px;
-      font-size: 13px;
-      color: var(--muted);
+    .tiny-note {
+      margin-top: 14px;
       text-align: center;
+      color: var(--muted);
+      font-size: 13px;
       line-height: 1.7;
     }
 
-    .pulse {
-      animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(168,85,247,0.18); }
-      50% { box-shadow: 0 0 0 14px rgba(168,85,247,0); }
+    .footer-line {
+      margin-top: 18px;
+      text-align: center;
+      color: #f5d0fe;
+      font-size: 13px;
     }
 
     #shareCard {
@@ -309,13 +411,13 @@
       left: -9999px;
       top: -9999px;
       width: 1080px;
-      min-height: 1080px;
-      padding: 70px;
+      min-height: 1350px;
+      padding: 64px;
       color: white;
       background:
-        radial-gradient(circle at 20% 20%, rgba(168,85,247,0.35), transparent 28%),
-        radial-gradient(circle at 80% 25%, rgba(6,182,212,0.25), transparent 26%),
-        radial-gradient(circle at 50% 80%, rgba(245,158,11,0.18), transparent 20%),
+        radial-gradient(circle at 18% 18%, rgba(168,85,247,0.35), transparent 30%),
+        radial-gradient(circle at 84% 24%, rgba(6,182,212,0.25), transparent 28%),
+        radial-gradient(circle at 50% 84%, rgba(245,158,11,0.18), transparent 22%),
         linear-gradient(135deg, #020617, #1e1b4b 48%, #581c87);
       border-radius: 42px;
       overflow: hidden;
@@ -324,12 +426,14 @@
       flex-direction: column;
       justify-content: space-between;
       box-shadow: 0 30px 80px rgba(0,0,0,.35);
+      direction: rtl;
+      text-align: right;
     }
 
     #shareCard .share-stars {
       position: absolute;
       inset: 0;
-      opacity: 0.35;
+      opacity: .35;
       background-image:
         radial-gradient(3px 3px at 60px 80px, rgba(255,255,255,.75), transparent),
         radial-gradient(2px 2px at 240px 150px, rgba(255,255,255,.65), transparent),
@@ -352,26 +456,26 @@
       border-radius: 999px;
       background: rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.14);
-      font-size: 30px;
+      font-size: 28px;
       color: #e9d5ff;
-      margin-bottom: 26px;
+      margin-bottom: 24px;
     }
 
     .share-title {
       font-size: 72px;
       font-weight: 700;
-      line-height: 1.1;
+      line-height: 1.08;
       margin-bottom: 14px;
     }
 
     .share-sub {
-      font-size: 34px;
+      font-size: 32px;
       color: #cbd5e1;
       line-height: 1.6;
     }
 
     .share-main-box {
-      margin-top: 44px;
+      margin-top: 38px;
       padding: 42px;
       border-radius: 34px;
       background: rgba(255,255,255,0.08);
@@ -382,9 +486,16 @@
     .share-name {
       font-size: 78px;
       font-weight: 700;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       color: #fff7ed;
       text-shadow: 0 0 18px rgba(245,158,11,.22);
+      line-height: 1.2;
+    }
+
+    .share-caption {
+      font-size: 30px;
+      color: #dbeafe;
+      line-height: 1.6;
     }
 
     .share-numbers {
@@ -403,7 +514,7 @@
     }
 
     .share-num-label {
-      font-size: 28px;
+      font-size: 27px;
       color: #cbd5e1;
       margin-bottom: 10px;
     }
@@ -413,91 +524,142 @@
       font-weight: 700;
     }
 
+    .share-meaning-title {
+      font-size: 30px;
+      color: #fde68a;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
     .share-meaning {
-      font-size: 34px;
-      line-height: 1.8;
+      font-size: 33px;
+      line-height: 1.75;
       color: #f8fafc;
     }
 
     .share-footer {
       display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 32px;
+    }
+
+    .share-cta {
+      padding: 26px 30px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(245,158,11,0.18), rgba(239,68,68,0.14));
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 34px;
+      line-height: 1.6;
+      color: #fff7ed;
+      font-weight: 700;
+    }
+
+    .share-brand-row {
+      display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 36px;
       color: #dbeafe;
       font-size: 28px;
     }
 
     .brand {
       color: #fde68a;
-      font-weight: bold;
+      font-weight: 700;
     }
 
-    @media (max-width: 640px) {
-      body { padding: 16px; }
-      .card { padding: 20px; border-radius: 24px; }
-      h1 { font-size: 29px; }
+    @media (max-width: 700px) {
+      body { padding: 12px; align-items: stretch; }
+      .content { padding: 18px; }
+      h1 { font-size: 31px; }
+      .subtitle { font-size: 15px; }
+      .form-box { padding: 14px; }
+      .input-row { flex-direction: column; }
       .grid { grid-template-columns: 1fr; }
+      .result-title { font-size: 20px; }
       .action-row { flex-direction: column; }
-      button, input { width: 100%; }
+      button { width: 100%; }
+      input { min-width: 0; }
     }
   </style>
 </head>
 <body>
   <div class="stars"></div>
 
-  <div class="wrap">
-    <div class="card pulse">
-      <div class="top-badge">✨ גימטריה • מספר קטן • שיתוף לתמונה</div>
-      <h1>גלה את המספר הסודי של השם שלך</h1>
-      <p class="subtitle">מכניסים שם בעברית, מקבלים גימטריה, מספר קטן ופירוש מעניין — ואז אפשר לשתף כתמונה מעוצבת ומגניבה.</p>
+  <div class="page">
+    <div class="shell">
+      <div class="content">
+        <div class="top-badge">✨ גימטריה • מספר קטן • פירוש • שיתוף כתמונה</div>
+        <h1>מה המספר הסודי של השם שלך?</h1>
+        <p class="subtitle">הכניסו שם מלא בעברית, וקבלו תוצאה מעוצבת עם סך הגימטריה, המספר הקטן ופירוש ברור ונעים לקריאה — כולל אפשרות לשתף כתמונה מקצועית.</p>
+        <div class="hero-note">מומלץ לבדוק שם מלא לקבלת תוצאה מלאה יותר.</div>
 
-      <div class="input-wrap">
-        <input id="nameInput" type="text" placeholder="לדוגמה: ישראל" />
-        <button class="primary-btn" onclick="calculateGematria()">חשב לי</button>
-      </div>
-
-      <div id="error" class="error"></div>
-      <div id="success" class="success"></div>
-
-      <div id="result" class="result">
-        <div class="grid">
-          <div class="box">
-            <div class="label">סך הגימטריה</div>
-            <div id="gematriaValue" class="value">0</div>
+        <div class="form-box">
+          <label class="form-label" for="nameInput">שם מלא בעברית</label>
+          <div class="input-row">
+            <input id="nameInput" type="text" placeholder="לדוגמה: ישראל נחמני" autocomplete="name" />
+            <button class="primary-btn" id="calcBtn" onclick="startCalculation()">חשב לי</button>
           </div>
-          <div class="box">
-            <div class="label">המספר הקטן</div>
-            <div id="smallNumberValue" class="value">0</div>
+          <div id="status" class="status"></div>
+          <div id="error" class="error"></div>
+        </div>
+
+        <div id="loader" class="loader">
+          <div class="orb"></div>
+          <div id="loaderText" class="loader-text">מחשב את האנרגיה של השם...</div>
+          <div class="loader-sub">עוד רגע התוצאה שלך נחשפת</div>
+        </div>
+
+        <div id="result" class="result">
+          <div class="result-head">
+            <div class="result-title" id="resultTitle">המספר של השם שלך מוכן</div>
+            <div class="result-chip">תוצאה אישית לשיתוף</div>
           </div>
+
+          <div class="grid">
+            <div class="box">
+              <div class="label">סך הגימטריה</div>
+              <div id="gematriaValue" class="value">0</div>
+            </div>
+            <div class="box">
+              <div class="label">המספר הקטן</div>
+              <div id="smallNumberValue" class="value">0</div>
+            </div>
+          </div>
+
+          <div class="meaning-card">
+            <div class="meaning-title">פירוש כללי</div>
+            <div id="meaningText" class="meaning-text"></div>
+          </div>
+
+          <div class="action-row">
+            <button class="secondary-btn" onclick="copyResultText()">העתק טקסט</button>
+            <button class="share-btn" onclick="shareAsImage()">שתף כתמונה</button>
+            <button class="wa-btn" onclick="shareToWhatsApp()">שתף לוואטסאפ</button>
+            <button class="ghost-btn" onclick="resetForm()">בדוק שם נוסף</button>
+          </div>
+
+          <div class="tiny-note">כפתור השיתוף לתמונה יוצר כרטיס מוכן לשליחה. במכשירים מסוימים תיפתח אפשרות שיתוף ישירה, ובאחרים תישמר תמונה מוכנה.</div>
         </div>
 
-        <div class="meaning">
-          <div class="label">פירוש</div>
-          <div id="meaningText"></div>
-        </div>
-
-        <div class="action-row">
-          <button class="secondary-btn" onclick="copyResultText()">העתק טקסט</button>
-          <button class="share-btn" onclick="shareAsImage()">שתף כתמונה</button>
-        </div>
+        <div class="footer-line">נבנה לחוויית מובייל מלאה • מתאים לשיתוף עם חברים ומשפחה</div>
       </div>
-
-      <div class="hint">כרגע המחשבון תומך באותיות עבריות. בהמשך אפשר להוסיף גם תאריך לידה, מספר גורל והתאמה זוגית.</div>
     </div>
   </div>
 
   <div id="shareCard">
     <div class="share-stars"></div>
+
     <div class="share-header">
       <div class="share-chip">✨ תוצאת הגימטריה שלי</div>
-      <div class="share-title">השם שלי מספר סיפור</div>
-      <div class="share-sub">גימטריה, מספר קטן ופירוש אישי מתוך השם</div>
+      <div class="share-title">מה המספר הסודי של השם שלך?</div>
+      <div class="share-sub">גימטריה, מספר קטן ופירוש כללי מתוך השם המלא</div>
     </div>
 
     <div class="share-content">
       <div class="share-main-box">
-        <div id="shareName" class="share-name">ישראל</div>
+        <div id="shareName" class="share-name">ישראל נחמני</div>
+        <div class="share-caption">המספר הקטן של השם חושף קו אופי כללי ואנרגיה מרכזית</div>
 
         <div class="share-numbers">
           <div class="share-num-box">
@@ -510,13 +672,17 @@
           </div>
         </div>
 
-        <div id="shareMeaning" class="share-meaning">המספר שלך משדר מנהיגות, יוזמה ועצמאות. יש כאן אנרגיה של התחלה, נוכחות ורצון להוביל.</div>
+        <div class="share-meaning-title">פירוש כללי</div>
+        <div id="shareMeaning" class="share-meaning">המספר שלך מצביע על הנהגה, יוזמה ויכולת לפעול בביטחון ובבהירות.</div>
       </div>
     </div>
 
     <div class="share-footer">
-      <div>נבדק במחשבון הגימטריה</div>
-      <div class="brand">Gematria Magic</div>
+      <div class="share-cta">בדקו גם את השם שלכם וקבלו תוצאה מעוצבת לשיתוף</div>
+      <div class="share-brand-row">
+        <div>נבדק במחשבון הגימטריה</div>
+        <div class="brand">Gematria Magic</div>
+      </div>
     </div>
   </div>
 
@@ -530,18 +696,26 @@
     };
 
     const meanings = {
-      1: 'המספר שלך משדר מנהיגות, יוזמה ועצמאות. יש כאן אנרגיה של התחלה, נוכחות ורצון להוביל.',
-      2: 'המספר שלך משדר רגישות, הקשבה וחיבור לאנשים. יש כאן אנרגיה של שיתוף, עדינות ויכולת לגשר.',
-      3: 'המספר שלך משדר ביטוי, יצירתיות ושמחת חיים. יש כאן אנרגיה קלילה, תקשורתית וסוחפת.',
-      4: 'המספר שלך משדר יציבות, אחריות וסדר. יש כאן אנרגיה מעשית, אמינה ומבוססת.',
-      5: 'המספר שלך משדר חופש, תנועה ושינוי. יש כאן אנרגיה של סקרנות, גיוון והרפתקה.',
-      6: 'המספר שלך משדר משפחתיות, אכפתיות והרמוניה. יש כאן אנרגיה של נתינה, אהבה ורצון לטפח.',
-      7: 'המספר שלך משדר עומק, מחשבה וחיפוש פנימי. יש כאן אנרגיה רוחנית, חכמה ושקטה.',
-      8: 'המספר שלך משדר עוצמה, שאפתנות ויכולת לממש. יש כאן אנרגיה חזקה של הישגיות והשפעה.',
-      9: 'המספר שלך משדר נתינה, חמלה וראייה רחבה. יש כאן אנרגיה אידיאליסטית עם לב גדול.'
+      1: 'המספר הזה מאפיין הנהגה, עצמאות ויוזמה. יש כאן נטייה להיות ראשונים, לפעול בביטחון, לקבל החלטות גם כשהן מורכבות, ולגשת לדברים בגישה יצירתית ומעשית.',
+      2: 'המספר הזה מאפיין רגישות, הקשבה ויכולת לקלוט אנרגיות במהירות. יש כאן חיבור לשיתוף פעולה, רצון להרגיע מצבים, נוכחות תומכת, אינטואיציה חזקה ויכולת להשפיע גם בלי להרים את הקול.',
+      3: 'המספר הזה מאפיין יצירתיות, שמחת חיים וסקרנות. יש כאן יכולת לראות טוב, להפיץ אנרגיה נעימה, ולהיות נוכחות שכיף להיות בסביבה שלה ושאנשים נמשכים אליה באופן טבעי.',
+      4: 'המספר הזה מאפיין יציבות, סדר, ארגון ומחויבות לעשייה. יש כאן גישה רצינית לעבודה, אהבה למסגרת ברורה, אחריות גבוהה ואמינות שמאפשרת לאחרים לסמוך בעיניים עצומות.',
+      5: 'המספר הזה מאפיין חופש, שינוי, תנועה ותקשורת. יש כאן צורך במרחב, קושי עם הגבלות, יכולת להתחבר לאנשים בקלות, סקרנות מתמדת, אהבה ללמידה, שינוי אווירה ואנרגיה שמחה וחיה.',
+      6: 'המספר הזה מאפיין משפחתיות, אחריות, נתינה ודאגה לאחרים. יש כאן חיבור לטיפול, תמיכה, אכפתיות ורצון אמיתי לשמור על הבית, הקרובים והמרחב שמסביב.',
+      7: 'המספר הזה מאפיין רוחניות, עומק וחיפוש אחר אמת. יש כאן צורך בשקט, מחשבה פנימית, הסתכלות עמוקה על החיים וחוסר הסתפקות בתשובות שטחיות או רגילות.',
+      8: 'המספר הזה מאפיין עוצמה, שאפתנות, ניהול ויכולת להפוך דברים להצלחה. יש כאן נוכחות חזקה, חשיבה מעשית, חיבור לעולם החומר והכסף, לצד חיפוש מתמיד אחר איזון נכון.',
+      9: 'המספר הזה מאפיין חוכמה, נתינה, הנהגה ואכפתיות. יש כאן יכולת ללוות אחרים, להעניק עצה ותמיכה, לעזור בתקופות מאתגרות, לשמור על ראייה רחבה ולא להיתקע על דברים קטנים.'
     };
 
+    const loaderSteps = [
+      'מחשב את האנרגיה של השם...',
+      'מנתח את ערך הגימטריה...',
+      'מגלה את המספר הסודי...',
+      'מרכיב את התוצאה האישית...'
+    ];
+
     let latestResult = null;
+    let loaderInterval = null;
 
     function cleanHebrewName(name) {
       return name.replace(/[^א-ת ךםןףץ]/g, '').replace(/\s+/g, ' ').trim();
@@ -562,72 +736,114 @@
       return num;
     }
 
-    function showMessage(type, text) {
+    function showError(text) {
       const error = document.getElementById('error');
-      const success = document.getElementById('success');
-      error.style.display = 'none';
-      success.style.display = 'none';
-
-      if (type === 'error') {
-        error.textContent = text;
-        error.style.display = 'block';
-      } else {
-        success.textContent = text;
-        success.style.display = 'block';
-        setTimeout(() => { success.style.display = 'none'; }, 2500);
-      }
+      const status = document.getElementById('status');
+      status.style.display = 'none';
+      error.textContent = text;
+      error.style.display = 'block';
     }
 
-    function calculateGematria() {
+    function showStatus(text) {
+      const error = document.getElementById('error');
+      const status = document.getElementById('status');
+      error.style.display = 'none';
+      status.textContent = text;
+      status.style.display = 'block';
+      setTimeout(() => {
+        status.style.display = 'none';
+      }, 2600);
+    }
+
+    function startLoader() {
+      const loader = document.getElementById('loader');
+      const loaderText = document.getElementById('loaderText');
+      let i = 0;
+      loaderText.textContent = loaderSteps[0];
+      loader.classList.add('show');
+      clearInterval(loaderInterval);
+      loaderInterval = setInterval(() => {
+        i = (i + 1) % loaderSteps.length;
+        loaderText.textContent = loaderSteps[i];
+      }, 700);
+    }
+
+    function stopLoader() {
+      const loader = document.getElementById('loader');
+      clearInterval(loaderInterval);
+      loader.classList.remove('show');
+    }
+
+    function startCalculation() {
       const input = document.getElementById('nameInput');
-      const result = document.getElementById('result');
       const cleanedName = cleanHebrewName(input.value);
+      const result = document.getElementById('result');
 
       result.classList.remove('show');
+      latestResult = null;
 
       if (!cleanedName) {
-        showMessage('error', 'נא להזין שם בעברית כדי לחשב גימטריה.');
-        latestResult = null;
+        showError('נא להזין שם מלא בעברית כדי לקבל תוצאה.');
         return;
       }
+
+      if (cleanedName.length < 2) {
+        showError('כדאי להזין שם מלא או לפחות שם ברור בעברית.');
+        return;
+      }
+
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('status').style.display = 'none';
+
+      startLoader();
+
+      setTimeout(() => {
+        finishCalculation(cleanedName);
+      }, 2100);
+    }
+
+    function finishCalculation(cleanedName) {
+      stopLoader();
 
       const gematria = getGematria(cleanedName);
       const smallNumber = getSmallNumber(gematria);
       const meaning = meanings[smallNumber] || 'לא נמצא פירוש מתאים.';
-      const fullText = `עבור השם "${cleanedName}", ערך הגימטריה הוא ${gematria}, והמספר הקטן הוא ${smallNumber}. ${meaning}`;
+      const fullText = `עבור השם "${cleanedName}", סך הגימטריה הוא ${gematria}, והמספר הקטן הוא ${smallNumber}. ${meaning}`;
 
       latestResult = { cleanedName, gematria, smallNumber, meaning, fullText };
 
+      document.getElementById('resultTitle').textContent = `התוצאה של ${cleanedName} מוכנה`;
       document.getElementById('gematriaValue').textContent = gematria;
       document.getElementById('smallNumberValue').textContent = smallNumber;
-      document.getElementById('meaningText').textContent = fullText;
+      document.getElementById('meaningText').textContent = meaning;
 
       document.getElementById('shareName').textContent = cleanedName;
       document.getElementById('shareGematria').textContent = gematria;
       document.getElementById('shareSmallNumber').textContent = smallNumber;
       document.getElementById('shareMeaning').textContent = meaning;
 
-      result.classList.add('show');
-      showMessage('success', 'התוצאה מוכנה — אפשר עכשיו גם לשתף כתמונה.');
+      document.getElementById('result').classList.add('show');
+      showStatus('התוצאה מוכנה — אפשר לשתף כתמונה או בוואטסאפ.');
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     async function copyResultText() {
       if (!latestResult) {
-        showMessage('error', 'קודם צריך לחשב תוצאה.');
+        showError('קודם צריך לחשב תוצאה.');
         return;
       }
 
       try {
         await navigator.clipboard.writeText(latestResult.fullText);
-        showMessage('success', 'הטקסט הועתק ללוח.');
+        showStatus('הטקסט הועתק ללוח.');
       } catch (e) {
-        showMessage('error', 'לא הצלחתי להעתיק את הטקסט.');
+        showError('לא הצלחתי להעתיק את הטקסט.');
       }
     }
 
     async function shareAsImage() {
       if (!latestResult) {
-        showMessage('error', 'קודם צריך לחשב תוצאה.');
+        showError('קודם צריך לחשב תוצאה.');
         return;
       }
 
@@ -642,12 +858,11 @@
 
         canvas.toBlob(async (blob) => {
           if (!blob) {
-            showMessage('error', 'לא הצלחתי ליצור את התמונה.');
+            showError('לא הצלחתי ליצור את התמונה.');
             return;
           }
 
           const file = new File([blob], 'gematria-result.png', { type: 'image/png' });
-
           const canNativeShare = navigator.share && navigator.canShare && navigator.canShare({ files: [file] });
 
           if (canNativeShare) {
@@ -656,7 +871,7 @@
               title: 'תוצאת הגימטריה שלי',
               text: `בדקתי את השם שלי: ${latestResult.cleanedName}`
             });
-            showMessage('success', 'התמונה שותפה בהצלחה.');
+            showStatus('התמונה שותפה בהצלחה.');
             return;
           }
 
@@ -666,15 +881,37 @@
           a.download = 'gematria-result.png';
           a.click();
           URL.revokeObjectURL(url);
-          showMessage('success', 'נוצרה תמונה להורדה ושיתוף.');
+          showStatus('נוצרה תמונה מוכנה לשיתוף.');
         }, 'image/png');
       } catch (e) {
-        showMessage('error', 'השיתוף לא הצליח במכשיר הזה.');
+        showError('השיתוף כתמונה לא הצליח במכשיר הזה.');
       }
     }
 
+    function shareToWhatsApp() {
+      if (!latestResult) {
+        showError('קודם צריך לחשב תוצאה.');
+        return;
+      }
+
+      const pageUrl = window.location.href;
+      const text = `בדקתי את הגימטריה של השם שלי 🔮\n\nהשם: ${latestResult.cleanedName}\nהמספר הקטן: ${latestResult.smallNumber}\n\nבדקו גם את השם שלכם 👇\n${pageUrl}`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    function resetForm() {
+      document.getElementById('nameInput').value = '';
+      document.getElementById('result').classList.remove('show');
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('status').style.display = 'none';
+      latestResult = null;
+      document.getElementById('nameInput').focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     document.getElementById('nameInput').addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') calculateGematria();
+      if (event.key === 'Enter') startCalculation();
     });
   </script>
 </body>
