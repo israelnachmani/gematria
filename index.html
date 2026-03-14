@@ -217,9 +217,7 @@
     button:active { transform: translateY(0); }
 
     .primary-btn { background: linear-gradient(135deg, var(--accent1), #7c3aed 46%, #2563eb); }
-    .secondary-btn { background: linear-gradient(135deg, #0ea5e9, #14b8a6); }
     .share-btn { background: linear-gradient(135deg, #f59e0b, #ef4444); }
-    .wa-btn { background: linear-gradient(135deg, #22c55e, #16a34a); }
     .ghost-btn {
       background: rgba(255,255,255,0.09);
       border: 1px solid rgba(255,255,255,0.12);
@@ -637,7 +635,7 @@
             <button class="ghost-btn" onclick="resetForm()">בדוק שם נוסף</button>
           </div>
 
-          <div class="tiny-note">כפתור השיתוף יוצר תמונה מוכנה ומצרף גם טקסט עם קישור לאתר. במכשירים שתומכים בזה תיפתח אפשרות שיתוף ישירה, ובאחרים תישמר תמונה מוכנה לשיתוף.</div>כפתור השיתוף לתמונה יוצר כרטיס מוכן לשליחה. במכשירים מסוימים תיפתח אפשרות שיתוף ישירה, ובאחרים תישמר תמונה מוכנה.</div>
+          <div class="tiny-note">כפתור השיתוף יוצר תמונה מוכנה ומצרף גם טקסט עם קישור לאתר. במכשירים שתומכים בזה תיפתח אפשרות שיתוף ישירה, ובאחרים תישמר תמונה מוכנה לשיתוף.</div>
         </div>
 
         <div class="footer-line">נבנה לחוויית מובייל מלאה • מתאים לשיתוף עם חברים ומשפחה</div>
@@ -676,7 +674,8 @@
     </div>
 
     <div class="share-footer">
-      <div class="share-cta">בדקו גם את השם שלכם וקבלו תוצאה מעוצבת לשיתוף</div>
+      <div class="share-cta">בדקתי את השם שלי 🔮
+בדקו גם את השם שלכם וקבלו תוצאה מעוצבת לשיתוף</div>
       <div class="share-brand-row">
         <div>נבדק במחשבון הגימטריה</div>
         <div class="brand">Gematria Magic</div>
@@ -806,9 +805,8 @@
       const gematria = getGematria(cleanedName);
       const smallNumber = getSmallNumber(gematria);
       const meaning = meanings[smallNumber] || 'לא נמצא פירוש מתאים.';
-      const fullText = `עבור השם "${cleanedName}", סך הגימטריה הוא ${gematria}, והמספר הקטן הוא ${smallNumber}. ${meaning}`;
 
-      latestResult = { cleanedName, gematria, smallNumber, meaning, fullText };
+      latestResult = { cleanedName, gematria, smallNumber, meaning };
 
       document.getElementById('resultTitle').textContent = `התוצאה של ${cleanedName} מוכנה`;
       document.getElementById('gematriaValue').textContent = gematria;
@@ -821,7 +819,7 @@
       document.getElementById('shareMeaning').textContent = meaning;
 
       document.getElementById('result').classList.add('show');
-      showStatus('התוצאה מוכנה — אפשר לשתף כתמונה או בוואטסאפ.');
+      showStatus('התוצאה מוכנה — אפשר לשתף אותה עכשיו.');
       document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
@@ -848,13 +846,7 @@
 
           const file = new File([blob], 'gematria-result.png', { type: 'image/png' });
           const pageUrl = window.location.href;
-          const shareText = `בדקתי את השם שלי 🔮
-
-השם: ${latestResult.cleanedName}
-המספר הקטן: ${latestResult.smallNumber}
-
-בדקו גם את השם שלכם 👇
-${pageUrl}`;
+          const shareText = `בדקתי את השם שלי 🔮\n\nהשם: ${latestResult.cleanedName}\nהמספר הקטן: ${latestResult.smallNumber}\n\nבדקו גם את השם שלכם 👇\n${pageUrl}`;
           const canNativeShare = navigator.share && navigator.canShare && navigator.canShare({ files: [file] });
 
           if (canNativeShare) {
@@ -886,7 +878,7 @@ ${pageUrl}`;
       }
     }
 
-    function resetForm() {) {
+    function resetForm() {
       document.getElementById('nameInput').value = '';
       document.getElementById('result').classList.remove('show');
       document.getElementById('error').style.display = 'none';
